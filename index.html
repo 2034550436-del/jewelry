@@ -59,17 +59,202 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
 </div>
 <script>
-const DATA={"version": 1, "products": [], "categories": []};
-let activeCat="";
-let expandedParent=null;
+var DATA={
+  "products": [
+    {
+      "n": "窄轮胎镯",
+      "c": [
+        "古法常规手镯"
+      ],
+      "w": 50.0,
+      "rs": "52",
+      "cl": null,
+      "lc": 25.0,
+      "lu": "per_gram",
+      "img": "img_0.jpg"
+    },
+    {
+      "n": "卷草纹手镯",
+      "c": [
+        "古法常规手镯"
+      ],
+      "w": 54.0,
+      "rs": "54",
+      "cl": null,
+      "lc": 25.0,
+      "lu": "per_gram",
+      "img": "img_1.jpg"
+    },
+    {
+      "n": "錾刻小雏菊手镯",
+      "c": [
+        "錾刻工艺手镯"
+      ],
+      "w": 98.0,
+      "rs": "56",
+      "cl": null,
+      "lc": 35.0,
+      "lu": "per_gram",
+      "img": "img_2.jpg"
+    },
+    {
+      "n": "字母手链",
+      "c": [
+        "克罗心",
+        "手链"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": "20",
+      "lc": 50.0,
+      "lu": "per_gram",
+      "img": "img_3.jpg"
+    },
+    {
+      "n": "宝剑三合一",
+      "c": [
+        "克罗心",
+        "吊坠"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": null,
+      "lc": 8000.0,
+      "lu": null,
+      "img": "img_4.jpg"
+    },
+    {
+      "n": "克罗心链",
+      "c": [
+        "克罗心",
+        "项链"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": "60",
+      "lc": 6000.0,
+      "lu": "per_piece",
+      "img": "img_5.jpg"
+    },
+    {
+      "n": "戒",
+      "c": [
+        "克罗心",
+        "戒指"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": null,
+      "lc": null,
+      "lu": null,
+      "img": "img_6.jpg"
+    },
+    {
+      "n": "永恒之心",
+      "c": [
+        "克罗心"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": null,
+      "lc": null,
+      "lu": null,
+      "img": "img_7.jpg"
+    },
+    {
+      "n": "爱心藤蔓",
+      "c": [
+        "CNC"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": null,
+      "lc": null,
+      "lu": null,
+      "img": "img_8.jpg"
+    },
+    {
+      "n": "再来",
+      "c": [
+        "手镯"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": null,
+      "lc": null,
+      "lu": null,
+      "img": "img_9.jpg"
+    },
+    {
+      "n": "可以了！",
+      "c": [
+        "手镯"
+      ],
+      "w": null,
+      "rs": null,
+      "cl": null,
+      "lc": null,
+      "lu": null,
+      "img": "img_10.jpg"
+    }
+  ],
+  "categories": [
+    {
+      "name": "戒指",
+      "subs": []
+    },
+    {
+      "name": "手镯",
+      "subs": [
+        "錾刻工艺手镯",
+        "CNC精工手镯",
+        "古法常规手镯"
+      ]
+    },
+    {
+      "name": "项链",
+      "subs": []
+    },
+    {
+      "name": "吊坠",
+      "subs": []
+    },
+    {
+      "name": "耳饰",
+      "subs": []
+    },
+    {
+      "name": "手链",
+      "subs": []
+    },
+    {
+      "name": "摆件",
+      "subs": []
+    },
+    {
+      "name": "其他",
+      "subs": []
+    },
+    {
+      "name": "克罗心",
+      "subs": []
+    },
+    {
+      "name": "CNC",
+      "subs": []
+    }
+  ]
+};
+var activeCat="";
+var expandedParent=null;
 function buildFilters(){
   var f=document.getElementById("filters");
-  var h='<span class="chip on" onclick="filter(\'\')">全部</span>';
+  var h='<span class="chip on" onclick="filter(\\'\\')">全部</span>';
   DATA.categories.forEach(function(cat){
-    h+='<span class="chip parent" onclick="toggleParent(\''+cat.name+'\')">'+cat.name+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></span>';
+    h+='<span class="chip parent" onclick="toggleParent(\\''+cat.name+'\\')">'+cat.name+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></span>';
     h+='<span class="sub-group" id="sub-'+cat.name.replace(/ /g,'_')+'" style="display:none">';
     if(cat.subs) cat.subs.forEach(function(sub){
-      h+='<span class="chip sub" onclick="event.stopPropagation();filter(\''+sub+'\')">'+sub+'</span>';
+      h+='<span class="chip sub" onclick="event.stopPropagation();filter(\\''+sub+'\\')">'+sub+'</span>';
     });
     h+='</span>';
   });
@@ -88,15 +273,8 @@ function toggleParent(name){
 }
 function filter(cat){
   activeCat=cat;
-  // 子分类 chip 高亮
-  document.querySelectorAll(".chip.sub").forEach(function(el){
-    el.classList.toggle("on",el.textContent===cat);
-  });
-  // 清除所有父分类 chip 高亮
-  document.querySelectorAll(".chip.parent").forEach(function(el){
-    el.classList.remove("on");
-  });
-  // 折叠子分类组
+  document.querySelectorAll(".chip.sub").forEach(function(el){el.classList.toggle("on",el.textContent===cat)});
+  document.querySelectorAll(".chip.parent").forEach(function(el){el.classList.remove("on")});
   expandedParent=null;
   document.querySelectorAll(".sub-group").forEach(function(g){g.style.display="none"});
   render();
